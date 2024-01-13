@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/calculator-solid.svg" type="image/x-icon">
+
+    <style>
+       body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .calculator {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 300px;
+        }
+
+        .display {
+            width: calc(100% - 20px); /* Adjusted width to consider padding */
+            height: 60px;
+            text-align: right;
+            font-size: 24px;
+            border: none;
+            outline: none;
+            padding: 10px;
+            margin: 0; /* Removed default margin */
+        }
+    
+
+        .btn {
+            width: 75px;
+            height: 75px;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .row button:nth-child(4) {
+            background-color: #e74c3c;
+        }
+
+        .row button:nth-child(4):hover {
+            background-color: #c0392b;
+        }
+    </style>
+    <title>Simple Calculator</title>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div class="row">
+        <button class="btn" onclick="appendToDisplay('7')">7</button>
+        <button class="btn" onclick="appendToDisplay('8')">8</button>
+        <button class="btn" onclick="appendToDisplay('9')">9</button>
+        <button class="btn" onclick="appendToDisplay('*')">*</button>
+        </div>
+        <div class="row">
+        <button class="btn" onclick="appendToDisplay('4')">4</button>
+        <button class="btn" onclick="appendToDisplay('5')">5</button>
+        <button class="btn" onclick="appendToDisplay('6')">6</button>
+        <button class="btn" onclick="appendToDisplay('-')">-</button>
+        </div>
+        <div class="row">
+        <button class="btn" onclick="appendToDisplay('1')">1</button>
+        <button class="btn" onclick="appendToDisplay('2')">2</button>
+        <button class="btn" onclick="appendToDisplay('3')">3</button>
+        <button class="btn" onclick="appendToDisplay('+')">+</button>
+        </div>
+        <div class="row">
+        <button class="btn" onclick="clearDisplay()">C</button>
+        <button class="btn" onclick="appendToDisplay('0')">0</button>
+        <button class="btn" onclick="appendToDisplay('/')">/</button>
+        <button class="btn" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function calculateResult() {
+            try {
+                document.getElementById('display').value = eval(document.getElementById('display').value);
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
