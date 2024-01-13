@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+    <title>Term-to-Term Rule Finder</title>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="sequenceInput" placeholder="Enter the sequence (e.g., 2, 4, 6, 8)">
+        <br>
+        <button onclick="findTermToTermRule()">Find Term-to-Term Rule</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function findTermToTermRule() {
+            var sequenceInput = document.getElementById('sequenceInput').value;
+            var resultElement = document.getElementById('result');
+
+            try {
+                var sequence = sequenceInput.split(',').map(function(item) {
+                    return parseInt(item.trim(), 10);
+                });
+
+                if (sequence.length < 2) {
+                    throw new Error('At least two terms are required');
+                }
+
+                var termToTermRule = findTermToTermRuleInSequence(sequence);
+                resultElement.textContent = 'The term-to-term rule is: ' + termToTermRule;
+            } catch (error) {
+                resultElement.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function findTermToTermRuleInSequence(sequence) {
+    var differences = calculateDifferences(sequence);
+    var ratios = calculateRatios(sequence);
+
+    if (isArithmetic(differences)) {
+        return 'n → ' + differences[0] + 'n';
+    } else if (isGeometric(ratios)) {
+        return 'n → ' + ratios[0] + '^n';
+    } else {
+        throw new Error('Unable to determine the term-to-term rule');
+    }
+}
+
+        function calculateDifferences(sequence) {
+            var differences = [];
+            for (var i = 1; i < sequence.length; i++) {
+                differences.push(sequence[i] - sequence[i - 1]);
+            }
+            return differences;
+        }
+
+        function calculateRatios(sequence) {
+            var ratios = [];
+            for (var i = 1; i < sequence.length; i++) {
+                ratios.push(sequence[i] / sequence[i - 1]);
+            }
+            return ratios;
+        }
+
+        function isArithmetic(differences) {
+            var commonDifference = differences[0];
+            for (var i = 1; i < differences.length; i++) {
+                if (differences[i] !== commonDifference) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function isGeometric(ratios) {
+            var commonRatio = ratios[0];
+            for (var i = 1; i < ratios.length; i++) {
+                if (ratios[i] !== commonRatio) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
