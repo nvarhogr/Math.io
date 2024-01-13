@@ -1,0 +1,54 @@
+body {
+    background-color: #0cc0df; /* Red background for the body */
+    margin: 0; /* Remove default margin */
+    font-family: 'Arial', sans-serif;
+}
+
+header {
+    background-color: #0cc0df;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    height: 50px;
+}
+
+.list-box {
+    width: 757px;
+    height: 115px;
+    border: 0px solid #ddd;
+    border-radius: 0px;
+    overflow: hidden;
+}
+
+.horizontal-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.horizontal-list li {
+    margin-left: 20px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.horizontal-list li button {
+    width: 95px;
+    height: 95px;
+    width: 100%;
+    padding: 8px;
+    align-content: center;
+    background-color: #0cc0df;
+    color: #fff;
+    border: 0.2px solid black;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.icon{
+    margin-bottom: 5px;
+}
