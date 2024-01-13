@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/calculator-solid.svg" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        input {
+            width: 100px;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin: 10px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+    <title>Surd Calculator</title>
+</head>
+<body>
+    <h1>Surd Calculator</h1>
+    <p>Enter two surds. (e.g. 3√5 + √5)</p>
+
+    <input type="text" id="surd1" placeholder="Enter surd 1 (a√b)">
+    <select id="operation">
+        <option value="add">+</option>
+        <option value="subtract">-</option>
+        <option value="multiply">*</option>
+        <option value="divide">/</option>
+    </select>
+    <input type="text" id="surd2" placeholder="Enter surd 2 (a√b)">
+    <button onclick="calculate()">Calculate</button>
+    
+    <p id="result"></p>
+
+    <script>
+        function calculate() {
+            var surd1 = parseSurd(document.getElementById('surd1').value);
+            var surd2 = parseSurd(document.getElementById('surd2').value);
+            var operation = document.getElementById('operation').value;
+            var resultElement = document.getElementById('result');
+
+            try {
+                var result;
+                if (operation === 'add') {
+                    result = addSurds(surd1, surd2);
+                } else if (operation === 'subtract') {
+                    result = subtractSurds(surd1, surd2);
+                } else if (operation === 'multiply') {
+                    result = multiplySurds(surd1, surd2);
+                } else if (operation === 'divide') {
+                    result = divideSurds(surd1, surd2);
+                } else {
+                    throw new Error('Invalid operation');
+                }
+
+                resultElement.textContent = 'Result: ' + result;
+            } catch (error) {
+                resultElement.textContent = 'Error: ' + error.message;
+            }
+        }
+
+        function parseSurd(surd) {
+            var parts = surd.match(/(\d*)√(\d+)/);
+            if (!parts) {
+                throw new Error('Invalid surd format');
+            }
+
+            var coefficient = parts[1] === '' ? 1 : parseInt(parts[1], 10);
+            var radicand = parseInt(parts[2], 10);
+
+            return { coefficient: coefficient, radicand: radicand };
+        }
+
+        function addSurds(surd1, surd2) {
+            if (surd1.radicand !== surd2.radicand) {
+                throw new Error('Radicands must be the same for addition');
+            }
+
+            var resultCoefficient = surd1.coefficient + surd2.coefficient;
+
+            return resultCoefficient + '√' + surd1.radicand;
+        }
+
+        function subtractSurds(surd1, surd2) {
+            if (surd1.radicand !== surd2.radicand) {
+                throw new Error('Radicands must be the same for subtraction');
+            }
+
+            var resultCoefficient = surd1.coefficient - surd2.coefficient;
+
+            return resultCoefficient + '√' + surd1.radicand;
+        }
+
+        function multiplySurds(surd1, surd2) {
+            var resultCoefficient = surd1.coefficient * surd2.coefficient;
+            var resultRadicand = surd1.radicand * surd2.radicand;
+
+            return resultCoefficient + '√' + resultRadicand;
+        }
+
+        function divideSurds(surd1, surd2) {
+            if (surd2.coefficient === 0) {
+                throw new Error('Cannot divide by zero');
+            }
+
+            var resultCoefficient = surd1.coefficient / surd2.coefficient;
+            var resultRadicand = surd1.radicand / surd2.radicand;
+
+            return resultCoefficient + '√' + resultRadicand;
+        }
+    </script>
+</body>
+</html>
